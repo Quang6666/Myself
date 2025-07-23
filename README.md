@@ -1,12 +1,18 @@
-# React + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# Mystart ReactJS Project
 
-Currently, two official plugins are available:
+Dự án ReactJS được khởi tạo bằng Vite.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Cấu trúc thư mục đề xuất
+- `src/components`: Chứa các React components dùng lại.
+- `src/pages`: Chứa các trang chính của ứng dụng.
+- `src/assets`: Chứa hình ảnh, file tĩnh, style.
 
-## Expanding the ESLint configuration
+## Khởi động dự án
+```bash
+npm run dev
+```
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Thông tin thêm
+- Sử dụng function component, hooks, ES6+.
+- Tuân thủ best practices của React.
