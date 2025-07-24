@@ -95,6 +95,50 @@ CREATE TABLE order_items (
     price NUMERIC(12,2) NOT NULL,
     PRIMARY KEY (order_id, product_id)
 );
+
+-- Bảng video
+CREATE TABLE videos (
+    id SERIAL PRIMARY KEY,
+    user_id INT REFERENCES users(id) ON DELETE SET NULL,
+    title VARCHAR(100) NOT NULL,
+    description TEXT,
+    url VARCHAR(255) NOT NULL,
+    thumbnail VARCHAR(255),
+    likes INT DEFAULT 0,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Bảng lưu lượt like video của từng user
+CREATE TABLE video_likes (
+    user_id INT REFERENCES users(id) ON DELETE CASCADE,
+    video_id INT REFERENCES videos(id) ON DELETE CASCADE,
+    PRIMARY KEY (user_id, video_id)
+);
+
+-- Bảng bình luận video
+CREATE TABLE video_comments (
+    id SERIAL PRIMARY KEY,
+    video_id INT REFERENCES videos(id) ON DELETE CASCADE,
+    user_id INT REFERENCES users(id) ON DELETE SET NULL,
+    content TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+-- Bảng theo dõi trạng thái hiện tại của đơn hàng
+CREATE TABLE order_status (
+    order_id INT REFERENCES orders(id) ON DELETE CASCADE,
+    status VARCHAR(30) NOT NULL,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (order_id)
+);
+
+-- Bảng lịch sử trạng thái đơn hàng
+CREATE TABLE order_status_history (
+    id SERIAL PRIMARY KEY,
+    order_id INT REFERENCES orders(id) ON DELETE CASCADE,
+    status VARCHAR(30) NOT NULL,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    note TEXT
+);
 select * from users;
 select * from roles;
 select * from permissions;
@@ -105,6 +149,8 @@ select * from categories;
 select * from product_categories;
 select * from orders;
 select * from order_items;
+select * from videos;
+select * from video_comments;
 Drop table if exists users cascade;
 Drop table if exists roles cascade;
 Drop table if exists permissions cascade;
@@ -115,3 +161,7 @@ Drop table if exists categories cascade;
 Drop table if exists product_categories cascade;
 Drop table if exists orders cascade;
 Drop table if exists order_items cascade;
+Drop table if exists videos cascade;
+Drop table if exists video_comments cascade;
+Drop table if exists order_status cascade;
+Drop table if exists order_status_history cascade;
