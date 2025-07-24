@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { login, forgotPassword } from '../api/auth';
 import viteLogo from '/vite.svg';
 
 export default function Login() {
@@ -13,17 +14,21 @@ export default function Login() {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = e => {
+  const handleSubmit = async e => {
     e.preventDefault();
     setLoading(true);
-    setTimeout(() => {
-      if (form.username === 'admin' && form.password === 'admin123') {
-        setMessage('Đăng nhập thành công (demo)!');
+    setMessage('');
+    try {
+      const res = await login(form);
+      if (res.success) {
+        setMessage('Đăng nhập thành công!');
       } else {
-        setMessage('Sai thông tin đăng nhập!');
+        setMessage(res.message || 'Sai thông tin đăng nhập!');
       }
-      setLoading(false);
-    }, 1000);
+    } catch (err) {
+      setMessage('Lỗi kết nối server!');
+    }
+    setLoading(false);
   };
 
   return (
@@ -107,11 +112,21 @@ export default function Login() {
                   cursor: 'pointer',
                   width: '100%'
                 }}
-                onClick={() => {
+                onClick={async () => {
                   if (!forgotEmail.match(/^[^@\s]+@[^@\s]+\.[^@\s]+$/)) {
                     setForgotMsg('Email không hợp lệ!');
                   } else {
-                    setForgotMsg('Đã gửi hướng dẫn đặt lại mật khẩu tới email!');
+                    setForgotMsg('Đang gửi yêu cầu...');
+                    try {
+                      const res = await forgotPassword(forgotEmail);
+                      if (res.success) {
+                        setForgotMsg('Đã gửi hướng dẫn đặt lại mật khẩu tới email!');
+                      } else {
+                        setForgotMsg(res.message || 'Không thể gửi yêu cầu!');
+                      }
+                    } catch (err) {
+                      setForgotMsg('Lỗi kết nối server!');
+                    }
                   }
                 }}
               >

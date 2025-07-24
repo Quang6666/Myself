@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { register } from '../api/auth';
 import viteLogo from '/vite.svg';
 
 export default function Register() {
@@ -10,13 +11,23 @@ export default function Register() {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = e => {
+  const handleSubmit = async e => {
     e.preventDefault();
     setLoading(true);
-    setTimeout(() => {
-      setMessage('Đăng ký thành công (demo)!');
-      setLoading(false);
-    }, 1000);
+    setMessage('');
+    try {
+      const res = await register(form);
+      if (res.message) {
+        setMessage(res.message);
+      } else if (res.error) {
+        setMessage(res.error);
+      } else {
+        setMessage('Đăng ký không thành công!');
+      }
+    } catch (err) {
+      setMessage('Lỗi kết nối server!');
+    }
+    setLoading(false);
   };
 
   return (

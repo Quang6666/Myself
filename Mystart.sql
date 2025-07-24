@@ -15,14 +15,14 @@ CREATE TABLE roles (
     name VARCHAR(50) UNIQUE NOT NULL
 );
 -- Thêm vai trò guest vào bảng roles
-INSERT INTO roles (name, description) VALUES ('admin');
-INSERT INTO roles (name, description) VALUES ('manager');
-INSERT INTO roles (name, description) VALUES ('staff');
-INSERT INTO roles (name, description) VALUES ('guest');
+INSERT INTO roles (name) VALUES ('admin');
+INSERT INTO roles (name) VALUES ('manager');
+INSERT INTO roles (name) VALUES ('staff');
+INSERT INTO roles (name) VALUES ('guest');
 -- Bảng quyền
 CREATE TABLE permissions (
     id SERIAL PRIMARY KEY,
-    name VARCHAR(50) UNIQUE NOT NULL,
+    name VARCHAR(50) UNIQUE NOT NULL
 );
 
 -- Bảng liên kết người dùng - vai trò
@@ -43,7 +43,6 @@ CREATE TABLE role_permissions (
 CREATE TABLE products (
     id SERIAL PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
-    description TEXT,
     price NUMERIC(12,2) NOT NULL,
     image_url VARCHAR(255),
     likes INT DEFAULT 0,
@@ -69,7 +68,7 @@ CREATE TABLE comments (
 -- Bảng danh mục sản phẩm
 CREATE TABLE categories (
     id SERIAL PRIMARY KEY,
-    name VARCHAR(50) UNIQUE NOT NULL,
+    name VARCHAR(50) UNIQUE NOT NULL
 );
 
 -- Bảng liên kết nhiều-nhiều sản phẩm - danh mục
@@ -101,7 +100,6 @@ CREATE TABLE videos (
     id SERIAL PRIMARY KEY,
     user_id INT REFERENCES users(id) ON DELETE SET NULL,
     title VARCHAR(100) NOT NULL,
-    description TEXT,
     url VARCHAR(255) NOT NULL,
     thumbnail VARCHAR(255),
     likes INT DEFAULT 0,
