@@ -14,7 +14,7 @@ const pool = new Pool({
   user: 'postgres', // sửa lại user nếu cần
   host: 'localhost',
   database: 'mystart', // sửa lại tên db nếu cần
-  password: 'yourpassword', // sửa lại password
+  password: '1', // sửa lại password
   port: 5432,
 });
 

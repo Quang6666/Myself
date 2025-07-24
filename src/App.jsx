@@ -1,22 +1,20 @@
 
+
 import { useState } from 'react';
 import reactLogo from './assets/react.svg';
 import viteLogo from '/vite.svg';
 import './App.css';
 import Register from './pages/Register';
 import Login from './pages/Login';
-
+import NavBar from './components/NavBar';
+import './components/NavBar';
 function App() {
   const [page, setPage] = useState('home');
   const [count, setCount] = useState(0);
 
   return (
     <>
-      <nav style={{ marginBottom: 20 }}>
-        <button onClick={() => setPage('home')}>Trang chủ</button>
-        <button onClick={() => setPage('login')}>Đăng nhập</button>
-        <button onClick={() => setPage('register')}>Đăng ký</button>
-      </nav>
+      <NavBar page={page} setPage={setPage} />
       {page === 'home' && (
         <>
           <div>
