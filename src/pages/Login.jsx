@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { login, forgotPassword } from '../api/auth';
 import viteLogo from '/vite.svg';
 
 export default function Login() {
+  const navigate = useNavigate();
   const [showForgot, setShowForgot] = useState(false);
   const [forgotEmail, setForgotEmail] = useState('');
   const [forgotMsg, setForgotMsg] = useState('');
@@ -22,6 +24,9 @@ export default function Login() {
       const res = await login(form);
       if (res.success) {
         setMessage('Đăng nhập thành công!');
+        if (res.user && res.user.role_id === 1) {
+          setTimeout(() => navigate('/admin'), 800);
+        }
       } else {
         setMessage(res.message || 'Sai thông tin đăng nhập!');
       }
